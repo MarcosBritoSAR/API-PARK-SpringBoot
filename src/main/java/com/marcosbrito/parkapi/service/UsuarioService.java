@@ -5,6 +5,7 @@ import com.marcosbrito.parkapi.entity.Usuario;
 import com.marcosbrito.parkapi.repository.UsuaruioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +17,7 @@ public class UsuarioService {
 
     private final UsuaruioRepository usuaruioRepository; //para que o lambok, é importante que eu
 
+    @Transactional
     public Usuario salvar(Usuario usuario) {
         return usuaruioRepository.save(usuario);
     }
