@@ -27,10 +27,16 @@ public class Usuario implements Serializable {
     @Column(nullable = false, length = 25)
     private Role role;
 
+    @Column(name = "data_criacao")
     private LocalDateTime dataCriacao;
+
+    @Column(name = "data_modificacao")
     private LocalDateTime dataModificacao;
 
+    @Column(name = "criado_por")
     private String criadoPor;
+
+    @Column(name = "modificado_por")
     private String modificadoPor;
 
 
