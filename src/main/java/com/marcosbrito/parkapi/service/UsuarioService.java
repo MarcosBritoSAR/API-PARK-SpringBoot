@@ -1,6 +1,7 @@
 package com.marcosbrito.parkapi.service;
 
 
+import com.marcosbrito.parkapi.entity.Usuario;
 import com.marcosbrito.parkapi.repository.UsuaruioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,11 @@ import org.springframework.stereotype.Service;
 * */
 public class UsuarioService {
 
-    private final UsuaruioRepository usuaruioRepository; //para que o lambok, é importante que eu 
-    //eu declares as minhas dependencias como final. Interessante né? 
+    private final UsuaruioRepository usuaruioRepository; //para que o lambok, é importante que eu
+
+    public Usuario salvar(Usuario usuario) {
+        return usuaruioRepository.save(usuario);
+    }
+    //eu declares as minhas dependencias como final. Interessante né?
 
 }
