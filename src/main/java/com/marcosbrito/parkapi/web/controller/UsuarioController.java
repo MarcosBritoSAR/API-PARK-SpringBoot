@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.swing.text.html.Option;
 import java.util.List;
 
-
 @RestController
 @RequestMapping("api/v1/usuarios")
 @RequiredArgsConstructor

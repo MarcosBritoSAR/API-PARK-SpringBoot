@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
+
 /*
-* O usar  @RequiredArgsConstructor, o lombok usa o construtor pra injetar a dependencia
-*
-* */
+ * O usar  @RequiredArgsConstructor, o lombok usa o construtor pra injetar a dependencia
+ *
+ * */
+@RequiredArgsConstructor
 public class UsuarioService {
 
     private final UsuaruioRepository usuaruioRepository; //para que o lambok, é importante que eu
@@ -24,3 +25,5 @@ public class UsuarioService {
     //eu declares as minhas dependencias como final. Interessante né?
 
 }
+
+
