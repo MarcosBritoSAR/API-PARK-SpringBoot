@@ -1,12 +1,17 @@
 package com.marcosbrito.parkapi.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.graph.internal.AbstractGraphNode;
 
 import javax.management.relation.Role;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+
+@Getter @Setter @NoArgsConstructor
 @Entity
 @Table(name = "usuarios")
 public class Usuario implements Serializable {
