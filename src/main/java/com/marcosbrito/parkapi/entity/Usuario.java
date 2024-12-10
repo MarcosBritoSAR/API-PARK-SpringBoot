@@ -18,10 +18,12 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String nome;
+    @Column(nullable = false, unique = true, length = 100)
+    private String username;
+    @Column(nullable = false, length = 200)
     private String password;
 
-
+    @Column(nullable = false, length = 25)
     private Role role;
 
     private LocalDateTime dataCriacao;
