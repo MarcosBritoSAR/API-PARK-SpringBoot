@@ -9,6 +9,7 @@ import org.hibernate.graph.internal.AbstractGraphNode;
 import javax.management.relation.Role;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 
 @Getter @Setter @NoArgsConstructor
@@ -49,4 +50,22 @@ public class Usuario implements Serializable {
         ROLE_ADMIN, ROLE_CLIENT
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Usuario usuario)) return false;
+        return id == usuario.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                '}';
+    }
 }
