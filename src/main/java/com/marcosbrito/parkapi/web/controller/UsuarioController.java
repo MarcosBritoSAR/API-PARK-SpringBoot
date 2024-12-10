@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
+import java.awt.*;
 import java.util.List;
 
 @RestController
@@ -35,4 +36,12 @@ public class UsuarioController {
     * Para devolver uma consulta, pecisamos de um ResponseEntity. Ele encapsula o objeto a ser devolvido e formato JSON
     * Junto com o objeto, ele devolve tambem cabeçalhos e informações adicionais
     * */
+
+
+    @PatchMapping("/{id}") //Por que usar  o Patch? São boas praticas! o Put é usado pra atualizar tudo e o patch para atualizacao parcial
+    public ResponseEntity<Usuario> updateSenha(@PathVariable Long id, @RequestBody Usuario usuario) {
+        Usuario user = usuarioService.updateSenha(id, usuario.getPassword());
+        return ResponseEntity.ok().body(user);
+    }
+
 }

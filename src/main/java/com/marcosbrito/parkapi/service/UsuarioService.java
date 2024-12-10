@@ -30,6 +30,14 @@ public class UsuarioService {
     public Usuario getUsuario(Long id) {
         return usuaruioRepository.findById(id).orElseThrow(() -> new RuntimeException("Invalid id: " + id));
     }
+
+    @Transactional()
+    public Usuario updateSenha(Long id, String password) {
+        Usuario usuario = getUsuario(id);
+        usuario.setPassword(password);
+        return usuaruioRepository.save(usuario);
+
+    }
     //eu declares as minhas dependencias como final. Interessante né?
 
 }
