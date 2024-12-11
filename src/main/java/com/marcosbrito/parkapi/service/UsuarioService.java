@@ -8,6 +8,7 @@ import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,6 +38,10 @@ public class UsuarioService {
         usuario.setPassword(password);
         return usuaruioRepository.save(usuario);
 
+    }
+
+    public List<Usuario> getAll() {
+        return usuaruioRepository.findAll();
     }
     //eu declares as minhas dependencias como final. Interessante né?
 

@@ -18,6 +18,14 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
+
+    @GetMapping()
+    public ResponseEntity<List<Usuario>> findAll() {
+        List<Usuario> users = usuarioService.getAll();
+        return ResponseEntity.ok().body(users);
+    }
+
+
     @PostMapping
     public ResponseEntity<Usuario> create(@RequestBody Usuario usuario) {
         Usuario usuario1 = usuarioService.salvar(usuario);
@@ -43,5 +51,7 @@ public class UsuarioController {
         Usuario user = usuarioService.updateSenha(id, usuario.getPassword());
         return ResponseEntity.ok().body(user);
     }
+
+
 
 }
