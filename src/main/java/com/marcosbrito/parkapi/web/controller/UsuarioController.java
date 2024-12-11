@@ -7,6 +7,7 @@ import com.marcosbrito.parkapi.dtos.UsuarioSenhaDTO;
 import com.marcosbrito.parkapi.dtos.mapper.UsuarioMapper;
 import com.marcosbrito.parkapi.entity.Usuario;
 import com.marcosbrito.parkapi.service.UsuarioService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,10 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
+    /*
+    *A anotacao valid informa para o controlador que o UsuarioCreateDTO precisa ser validado*/
     @PostMapping
-    public ResponseEntity<UsuarioResponseDTO> create(@RequestBody UsuarioCreateDTO createDto) {
+    public ResponseEntity<UsuarioResponseDTO> create(@Valid @RequestBody UsuarioCreateDTO createDto) {
         Usuario user = usuarioService.salvar(UsuarioMapper.toUsuario(createDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDto(user));
     }
