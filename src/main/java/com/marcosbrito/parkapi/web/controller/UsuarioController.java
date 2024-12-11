@@ -35,7 +35,9 @@ public class UsuarioController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UsuarioSenhaDTO dto) {
+        //Cfria-se um endPoint que permite a alteracao da senha
         Usuario user = usuarioService.editarSenha(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmaSenha());
+        //Nao retorna nada
         return ResponseEntity.noContent().build();
     }
 

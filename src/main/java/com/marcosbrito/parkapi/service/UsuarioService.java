@@ -32,7 +32,9 @@ public class UsuarioService {
             throw new RuntimeException("Nova senha não confere com confirmação de senha.");
         }
 
+        //Carrego o usuario direto do banco de dados
         Usuario user = buscarPorId(id);
+
         if (!user.getPassword().equals(senhaAtual)) {
             throw new RuntimeException("Sua senha não confere.");
         }

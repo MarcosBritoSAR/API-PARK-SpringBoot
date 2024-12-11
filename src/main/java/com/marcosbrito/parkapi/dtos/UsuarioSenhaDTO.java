@@ -9,6 +9,8 @@ import lombok.*;
 @ToString
 public class UsuarioSenhaDTO {
 
+    //Create
+
     private String senhaAtual;
     private String novaSenha;
     private String confirmaSenha;
