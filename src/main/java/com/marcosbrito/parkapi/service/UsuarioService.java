@@ -1,50 +1,48 @@
 package com.marcosbrito.parkapi.service;
 
-
 import com.marcosbrito.parkapi.entity.Usuario;
-import com.marcosbrito.parkapi.repository.UsuaruioRepository;
+import com.marcosbrito.parkapi.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
-
-/*
- * O usar  @RequiredArgsConstructor, o lombok usa o construtor pra injetar a dependencia
- *
- * */
 @RequiredArgsConstructor
+@Service
 public class UsuarioService {
 
-    private final UsuaruioRepository usuaruioRepository; //para que o lambok, é importante que eu
+    private final UsuarioRepository usuarioRepository;
 
     @Transactional
     public Usuario salvar(Usuario usuario) {
-        return usuaruioRepository.save(usuario);
+        return usuarioRepository.save(usuario);
     }
 
-    @Transactional(readOnly = true) //Essa anotation denuncia pro spring que esse metodo é exclusivo para consulta no DB
-    public Usuario getUsuario(Long id) {
-        return usuaruioRepository.findById(id).orElseThrow(() -> new RuntimeException("Invalid id: " + id));
+    @Transactional(readOnly = true)
+    public Usuario buscarPorId(Long id) {
+        return usuarioRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Usuário não encontrado.")
+        );
     }
 
-    @Transactional()
-    public Usuario updateSenha(Long id, String password) {
-        Usuario usuario = getUsuario(id);
-        usuario.setPassword(password);
-        return usuaruioRepository.save(usuario);
+    @Transactional
+    public Usuario editarSenha(Long id, String senhaAtual, String novaSenha, String confirmaSenha) {
+        if (!novaSenha.equals(confirmaSenha)) {
+            throw new RuntimeException("Nova senha não confere com confirmação de senha.");
+        }
 
+        Usuario user = buscarPorId(id);
+        if (!user.getPassword().equals(senhaAtual)) {
+            throw new RuntimeException("Sua senha não confere.");
+        }
+
+        user.setPassword(novaSenha);
+        return user;
     }
 
-    public List<Usuario> getAll() {
-        return usuaruioRepository.findAll();
+    @Transactional(readOnly = true)
+    public List<Usuario> buscarTodos() {
+        return usuarioRepository.findAll();
     }
-    //eu declares as minhas dependencias como final. Interessante né?
-
 }
-
-
