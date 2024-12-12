@@ -1,4 +1,4 @@
-//package com.marcosbrito.parkapi;
+package com.marcosbrito.parkapi;
 //
 //
 //import com.marcosbrito.parkapi.web.dto.UsuarioCreateDto;
@@ -17,7 +17,7 @@
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 //@Sql(scripts = "/sql/usuarios/usuarios-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 //@Sql(scripts = "/sql/usuarios/usuarios-delete.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-//public class UsuarioIT {
+public class UsuarioIT {
 //
 //    @Autowired
 //    WebTestClient testClient;
@@ -281,5 +281,5 @@
 //        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
 //        org.assertj.core.api.Assertions.assertThat(responseBody.size()).isEqualTo(3);
 //    }
-//}
+}
 //
