@@ -17,7 +17,7 @@ public class ErrorMessage {
     private int status;
     private String statusText;
     private String message;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonInclude(JsonInclude.Include.NON_NULL) //Excluir todos os campos nulos do corpo JSON4
     private Map<String, String> errors;
 
     public ErrorMessage() {

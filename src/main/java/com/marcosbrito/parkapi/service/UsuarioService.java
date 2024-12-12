@@ -1,6 +1,7 @@
 package com.marcosbrito.parkapi.service;
 
 import com.marcosbrito.parkapi.entity.Usuario;
+import com.marcosbrito.parkapi.exception.UsernameUniqueViolationException;
 import com.marcosbrito.parkapi.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

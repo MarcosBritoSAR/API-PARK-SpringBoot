@@ -1,5 +1,6 @@
 package com.marcosbrito.parkapi.web.exception;
 
+import com.marcosbrito.parkapi.exception.PasswordInvalidException;
 import com.marcosbrito.parkapi.exception.UsernameUniqueViolationException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,16 +18,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ApiExceptionHandler {
 
-//    @ExceptionHandler(PasswordInvalidException.class)
-//    public ResponseEntity<ErrorMessage> passwordInvalidException(RuntimeException ex, HttpServletRequest request) {
-//        log.error("Api Error - ", ex);
-//        return ResponseEntity
-//                .status(HttpStatus.BAD_REQUEST)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, ex.getMessage()));
-//    }
+    @ExceptionHandler(PasswordInvalidException.class)
+    public ResponseEntity<ErrorMessage> passwordInvalidException(RuntimeException ex, HttpServletRequest request) {
+        log.error("Api Error - ", ex);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, ex.getMessage()));
+    }
 
-    @ExceptionHandler(EntityNotFoundException.class)
+    @ExceptionHandler(EntityNotFoundException.class) //Escutando exception caso nao enccontre id do usuario
     public ResponseEntity<ErrorMessage> entityNotFoundException(RuntimeException ex, HttpServletRequest request) {
         log.error("Api Error - ", ex);
         return ResponseEntity
