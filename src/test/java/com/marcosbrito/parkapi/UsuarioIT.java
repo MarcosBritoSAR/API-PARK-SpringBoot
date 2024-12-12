@@ -102,48 +102,48 @@ public class UsuarioIT {
         org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
         org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(422);
     }
-//
-//    @Test
-//    public void createUsuario_ComPasswordInvalido_RetornarErrorMessageStatus422() {
-//        ErrorMessage responseBody = testClient
-//                .post()
-//                .uri("/api/v1/usuarios")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .bodyValue(new UsuarioCreateDto("tody@email.com", ""))
-//                .exchange()
-//                .expectStatus().isEqualTo(422)
-//                .expectBody(ErrorMessage.class)
-//                .returnResult().getResponseBody();
-//
-//        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
-//        org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(422);
-//
-//        responseBody = testClient
-//                .post()
-//                .uri("/api/v1/usuarios")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .bodyValue(new UsuarioCreateDto("tody@email.com", "123"))
-//                .exchange()
-//                .expectStatus().isEqualTo(422)
-//                .expectBody(ErrorMessage.class)
-//                .returnResult().getResponseBody();
-//
-//        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
-//        org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(422);
-//
-//        responseBody = testClient
-//                .post()
-//                .uri("/api/v1/usuarios")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .bodyValue(new UsuarioCreateDto("tody@email.com", "123456789"))
-//                .exchange()
-//                .expectStatus().isEqualTo(422)
-//                .expectBody(ErrorMessage.class)
-//                .returnResult().getResponseBody();
-//
-//        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
-//        org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(422);
-//    }
+
+    @Test
+    public void createUsuario_ComPasswordInvalido_RetornarErrorMessageStatus422() {
+        ErrorMessage responseBody = testClient
+                .post()
+                .uri("/api/v1/usuarios")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new UsuarioCreateDto("tody@email.com", ""))
+                .exchange()
+                .expectStatus().isEqualTo(422)
+                .expectBody(ErrorMessage.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(422);
+
+        responseBody = testClient
+                .post()
+                .uri("/api/v1/usuarios")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new UsuarioCreateDto("tody@email.com", "123"))
+                .exchange()
+                .expectStatus().isEqualTo(422)
+                .expectBody(ErrorMessage.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(422);
+
+        responseBody = testClient
+                .post()
+                .uri("/api/v1/usuarios")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new UsuarioCreateDto("tody@email.com", "123456789"))
+                .exchange()
+                .expectStatus().isEqualTo(422)
+                .expectBody(ErrorMessage.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(422);
+    }
 //
 //    @Test
 //    public void createUsuario_ComUsernameRepetido_RetornarErrorMessageComStatus409() {
