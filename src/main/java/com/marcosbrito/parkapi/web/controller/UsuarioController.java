@@ -1,10 +1,10 @@
 package com.marcosbrito.parkapi.web.controller;
 
 
-import com.marcosbrito.parkapi.dtos.UsuarioCreateDTO;
-import com.marcosbrito.parkapi.dtos.UsuarioResponseDTO;
-import com.marcosbrito.parkapi.dtos.UsuarioSenhaDTO;
-import com.marcosbrito.parkapi.dtos.mapper.UsuarioMapper;
+import com.marcosbrito.parkapi.web.dto.UsuarioCreateDTO;
+import com.marcosbrito.parkapi.web.dto.UsuarioResponseDTO;
+import com.marcosbrito.parkapi.web.dto.UsuarioSenhaDTO;
+import com.marcosbrito.parkapi.web.dto.mapper.UsuarioMapper;
 import com.marcosbrito.parkapi.entity.Usuario;
 import com.marcosbrito.parkapi.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -37,7 +37,7 @@ public class UsuarioController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UsuarioSenhaDTO dto) {
+    public ResponseEntity<Void> updatePassword(@Valid @PathVariable Long id, @RequestBody UsuarioSenhaDTO dto) {
         //Cfria-se um endPoint que permite a alteracao da senha
         Usuario user = usuarioService.editarSenha(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmaSenha());
         //Nao retorna nada
