@@ -1,7 +1,10 @@
 package com.marcosbrito.parkapi;
 
+import org.modelmapper.internal.bytebuddy.utility.dispatcher.JavaDispatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 
@@ -16,35 +19,45 @@ import org.springframework.test.context.jdbc.Sql;
 
 //import java.util.List;
 //
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) // Inclui uma dovumentacao web com a execucao do toncat propio para teste
-@Sql(scripts = "/sql/usuarios/usuarios-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD) //Executa antes dos testes
-@Sql(scripts = "/sql/usuarios/usuarios-delete.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD) //Excecuta depois dos testes
+//@ContextConfiguration(classes = {ParkApiApplication.class})
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) // Inclui uma dovumentacao web com a execucao do toncat propio para teste
+//@Sql(scripts = "classpath:src/test/resource/sql/usuarios/usuarios-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD) //Executa antes dos testes
+//@Sql(scripts = "classpath:sql/usuarios-delete.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD) //Excecuta depois dos testes
+//public class UsuarioIT {
+//
+////
+//    @Autowired
+//    WebTestClient testClient;
+//    /*
+//    O WebTestClient é uma ferramenta do Spring Framework para realizar testes de APIs REST de maneira reativa e programática. Ele permite enviar requisições HTTP para os endpoints da aplicação e verificar as respostas recebidas.
+//     */
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Sql(scripts = "/sql/usuarios/usuarios-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "/sql/usuarios/usuarios-delete.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class UsuarioIT {
-//
+
     @Autowired
-WebTestClient testClient;
-    /*
-    O WebTestClient é uma ferramenta do Spring Framework para realizar testes de APIs REST de maneira reativa e programática. Ele permite enviar requisições HTTP para os endpoints da aplicação e verificar as respostas recebidas.
-     */
-//
-//    @Test
-//    public void createUsuario_ComUsernameEPasswordValidos_RetornarUsuarioCriadoComStatus201() {
-//        UsuarioResponseDto responseBody = testClient
-//                .post()
-//                .uri("/api/v1/usuarios")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .bodyValue(new UsuarioResponseDto("tody@email.com", "123456"))
-//                .exchange()
-//                .expectStatus().isCreated()
-//                .expectBody(UsuarioResponseDto.class)
-//                .returnResult().getResponseBody();
-//
-//        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
-//        org.assertj.core.api.Assertions.assertThat(responseBody.getId()).isNotNull();
-//        org.assertj.core.api.Assertions.assertThat(responseBody.getUsername()).isEqualTo("tody@email.com");
-//        org.assertj.core.api.Assertions.assertThat(responseBody.getRole()).isEqualTo("CLIENTE");
-//    }
-//
+    WebTestClient testClient;
+
+    @Test //          motivo          o que está ssendo testado          o que retornara
+    public void createUsuario_ComUsernameEPasswordValidos_RetornarUsuarioCriadoComStatus201() {
+        UsuarioResponseDto responseBody = testClient //Uso o testClient para teste
+                .post()
+                .uri("/api/v1/usuarios")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new UsuarioCreateDto("tody@email.com", "123456"))
+                .exchange()
+                .expectStatus().isCreated() //tem que chegar o 201
+                .expectBody(UsuarioResponseDto.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(responseBody.getId()).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(responseBody.getUsername()).isEqualTo("tody@email.com");
+        org.assertj.core.api.Assertions.assertThat(responseBody.getRole()).isEqualTo("CLIENTE");
+    }
+
 //    @Test
 //    public void createUsuario_ComUsernameInvalido_RetornarErrorMessageStatus422() {
 //        ErrorMessage responseBody = testClient

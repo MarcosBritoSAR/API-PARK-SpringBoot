@@ -18,7 +18,7 @@ public class UsuarioMapper {
     }
 
 
-    //PRECISO EXAMINAR ISSO AQUI POR QUE EU NAO ENTENDI FOI NADA
+    //TODO: PRECISO EXAMINAR ISSO AQUI POR QUE EU NAO ENTENDI FOI NADA
     public static UsuarioResponseDto toDto(Usuario usuario) {
         String role = usuario.getRole().name().substring("ROLE_".length());
         PropertyMap<Usuario, UsuarioResponseDto> props = new PropertyMap<Usuario, UsuarioResponseDto>() {
