@@ -1,6 +1,8 @@
 package com.marcosbrito.parkapi.service;
 
 import com.marcosbrito.parkapi.entity.Usuario;
+import com.marcosbrito.parkapi.exception.EntityNotFoundException;
+import com.marcosbrito.parkapi.exception.PasswordInvalidException;
 import com.marcosbrito.parkapi.exception.UsernameUniqueViolationException;
 import com.marcosbrito.parkapi.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,21 +29,19 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public Usuario buscarPorId(Long id) {
         return usuarioRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Usuário não encontrado.")
+                () -> new EntityNotFoundException(String.format("Usuário id=%s não encontrado", id))
         );
     }
 
     @Transactional
     public Usuario editarSenha(Long id, String senhaAtual, String novaSenha, String confirmaSenha) {
         if (!novaSenha.equals(confirmaSenha)) {
-            throw new RuntimeException("Nova senha não confere com confirmação de senha.");
+            throw new PasswordInvalidException("Nova senha não confere com confirmação de senha.");
         }
 
-        //Carrego o usuario direto do banco de dados
         Usuario user = buscarPorId(id);
-
         if (!user.getPassword().equals(senhaAtual)) {
-            throw new RuntimeException("Sua senha não confere.");
+            throw new PasswordInvalidException("Sua senha não confere.");
         }
 
         user.setPassword(novaSenha);
