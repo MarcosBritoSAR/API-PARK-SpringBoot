@@ -11,7 +11,7 @@ public class SpringDocOpenApiConfig {
 
 
     @Bean
-    public OpenAPI customOpenAPI() {
+    public OpenAPI openAPI() {
         return new OpenAPI().info(new Info().title("REST-Api Documentation - spring Park").description("Api para gestao de estacionamento em um park").version("1.0.0").contact(new Contact().name("Marcos Brito").email("marcosbryto92@gmail.com")));
     }
 }

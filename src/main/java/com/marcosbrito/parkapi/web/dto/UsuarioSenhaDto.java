@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UsuarioSenhaDTO {
+public class UsuarioSenhaDto {
 
     //Create
     @NotBlank

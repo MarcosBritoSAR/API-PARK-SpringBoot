@@ -5,7 +5,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UsuarioDTO {
+public class UsuarioDto {
 
     private String username;
     private String password;

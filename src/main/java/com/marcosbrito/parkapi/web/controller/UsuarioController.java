@@ -1,9 +1,9 @@
 package com.marcosbrito.parkapi.web.controller;
 
 
-import com.marcosbrito.parkapi.web.dto.UsuarioCreateDTO;
-import com.marcosbrito.parkapi.web.dto.UsuarioResponseDTO;
-import com.marcosbrito.parkapi.web.dto.UsuarioSenhaDTO;
+import com.marcosbrito.parkapi.web.dto.UsuarioCreateDto;
+import com.marcosbrito.parkapi.web.dto.UsuarioResponseDto;
+import com.marcosbrito.parkapi.web.dto.UsuarioSenhaDto;
 import com.marcosbrito.parkapi.web.dto.mapper.UsuarioMapper;
 import com.marcosbrito.parkapi.entity.Usuario;
 import com.marcosbrito.parkapi.service.UsuarioService;
@@ -33,7 +33,7 @@ public class UsuarioController {
     @Operation(summary = "Consulta um usuário", description = "Recurso para consultar um usuario",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Recurso recuperado com sucesso",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponseDTO.class))),
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponseDto.class))),
                     @ApiResponse(responseCode = "409", description = "Usuário e-mail já cadastrado no sistema",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
                     @ApiResponse(responseCode = "422", description = "Recurso não processado por dados de entrada invalidos",
@@ -43,7 +43,7 @@ public class UsuarioController {
     /*
     *A anotacao valid informa para o controlador que o UsuarioCreateDTO precisa ser validado*/
     @PostMapping
-    public ResponseEntity<UsuarioResponseDTO> create(@Valid @RequestBody UsuarioCreateDTO createDto) {
+    public ResponseEntity<UsuarioResponseDto> create(@Valid @RequestBody UsuarioCreateDto createDto) {
         Usuario user = usuarioService.salvar(UsuarioMapper.toUsuario(createDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioMapper.toDto(user));
     }
@@ -53,18 +53,27 @@ public class UsuarioController {
     @Operation(summary = "Criar um novo usuário", description = "Recurso para criar um novo usuário",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Recurso criado com sucesso",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponseDTO.class))),
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
+                    @ApiResponse(responseCode = "400", description = "Senha nao confere encontrado",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
                     @ApiResponse(responseCode = "404", description = "Recurso não encontrado",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             })
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDTO> getById(@PathVariable Long id) {
+    public ResponseEntity<UsuarioResponseDto> getById(@PathVariable Long id) {
         Usuario user = usuarioService.buscarPorId(id);
         return ResponseEntity.ok(UsuarioMapper.toDto(user));
     }
 
+    @Operation(summary = "Atualiza Senha", description = "Atualiza senha",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "Senha atualizada com sucesso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponseDto.class))),
+                    @ApiResponse(responseCode = "404", description = "Recurso não encontrado",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+            })
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updatePassword(@Valid @PathVariable Long id, @RequestBody UsuarioSenhaDTO dto) {
+    public ResponseEntity<Void> updatePassword(@Valid @PathVariable Long id, @RequestBody UsuarioSenhaDto dto) {
         //Cfria-se um endPoint que permite a alteracao da senha
         Usuario user = usuarioService.editarSenha(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmaSenha());
         //Nao retorna nada
@@ -72,7 +81,7 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UsuarioResponseDTO>> getAll() {
+    public ResponseEntity<List<UsuarioResponseDto>> getAll() {
         List<Usuario> users = usuarioService.buscarTodos();
         return ResponseEntity.ok(UsuarioMapper.toListDto(users));
     }
