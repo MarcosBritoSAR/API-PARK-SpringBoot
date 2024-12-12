@@ -1,4 +1,4 @@
-package com.marcosbrito.parkapi.dtos;
+package com.marcosbrito.parkapi.web.dto;
 
 import lombok.*;
 

@@ -1,8 +1,8 @@
-package com.marcosbrito.parkapi.dtos.mapper;
+package com.marcosbrito.parkapi.web.dto.mapper;
 
 
-import com.marcosbrito.parkapi.dtos.UsuarioCreateDTO;
-import com.marcosbrito.parkapi.dtos.UsuarioResponseDTO;
+import com.marcosbrito.parkapi.web.dto.UsuarioCreateDTO;
+import com.marcosbrito.parkapi.web.dto.UsuarioResponseDTO;
 import com.marcosbrito.parkapi.entity.Usuario;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
