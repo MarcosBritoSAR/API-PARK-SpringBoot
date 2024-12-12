@@ -1,26 +1,31 @@
 package com.marcosbrito.parkapi;
-//
-//
-//import com.marcosbrito.parkapi.web.dto.UsuarioCreateDto;
-//import com.marcosbrito.parkapi.web.dto.UsuarioResponseDto;
-//import com.marcosbrito.parkapi.web.dto.UsuarioSenhaDto;
-//import com.marcosbrito.parkapi.web.exception.ErrorMessage;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.http.MediaType;
-//import org.springframework.test.context.jdbc.Sql;
-//import org.springframework.test.web.reactive.server.WebTestClient;
-//
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.reactive.server.WebTestClient;
+
+
+
+import com.marcosbrito.parkapi.web.dto.UsuarioCreateDto;
+import com.marcosbrito.parkapi.web.dto.UsuarioResponseDto;
+import com.marcosbrito.parkapi.web.dto.UsuarioSenhaDto;
+import com.marcosbrito.parkapi.web.exception.ErrorMessage;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
+
 //import java.util.List;
 //
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-//@Sql(scripts = "/sql/usuarios/usuarios-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-//@Sql(scripts = "/sql/usuarios/usuarios-delete.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT) // Inclui uma dovumentacao web com a execucao do toncat propio para teste
+@Sql(scripts = "/sql/usuarios/usuarios-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD) //Executa antes dos testes
+@Sql(scripts = "/sql/usuarios/usuarios-delete.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD) //Excecuta depois dos testes
 public class UsuarioIT {
 //
-//    @Autowired
-//    WebTestClient testClient;
+    @Autowired
+WebTestClient testClient;
+    /*
+    O WebTestClient é uma ferramenta do Spring Framework para realizar testes de APIs REST de maneira reativa e programática. Ele permite enviar requisições HTTP para os endpoints da aplicação e verificar as respostas recebidas.
+     */
 //
 //    @Test
 //    public void createUsuario_ComUsernameEPasswordValidos_RetornarUsuarioCriadoComStatus201() {
