@@ -42,7 +42,7 @@ public class JwtUtils {
         return Date.from(end.atZone(ZoneId.systemDefault()).toInstant());
     }
 
-    private static JwtToken generateToken(String username, String role) {
+    static JwtToken generateToken(String username, String role) {
 
         Date issuedAt = new Date(); // Gera a data atual como data de criação do token
         Date limit = expiration(issuedAt); // Calcula a data de expiração com base na data de criação

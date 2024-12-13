@@ -4,8 +4,10 @@ import com.marcosbrito.parkapi.entity.Usuario;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 
-// A classe JwtUserDetails estende a classe User do Spring Security,
-// adicionando informações personalizadas relacionadas ao usuário.
+/*
+-- Processo referente ao Spring Security
+Precisamos ter um objeto que extenda a interfacce User. Porque é esse o objetoq que o sprinng utiliza para armazenar as informacoes do usuairo logado
+ */
 public class JwtUserDetails extends User {
 
     // Um objeto da classe Usuario é mantido para armazenar os detalhes adicionais do usuário.
