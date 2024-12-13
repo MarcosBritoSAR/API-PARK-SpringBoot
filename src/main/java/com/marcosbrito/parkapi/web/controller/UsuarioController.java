@@ -61,7 +61,7 @@ public class UsuarioController {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             })
     @GetMapping("/{id}")
-    @PreAuthorize("(hasRole('ADMIN') OR hasRole('CLIENTE')) AND #id == authentication.principal.id ") //Autoria apenas os usuarios ADMIN
+    @PreAuthorize("(hasRole('ADMIN') OR hasRole('CLIENTE')) AND #id == authentication.principal.id ")
     public ResponseEntity<UsuarioResponseDto> getById(@PathVariable Long id) {
         Usuario user = usuarioService.buscarPorId(id);
         return ResponseEntity.ok(UsuarioMapper.toDto(user));
@@ -80,7 +80,7 @@ public class UsuarioController {
 
             })
     @PatchMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'CLIENTE') AND (#id == authentication.principal.id)")
+    @PreAuthorize("hasAnyRole('ADMIN','CLIENT') AND #id == authentication.principal.id ")
     public ResponseEntity<Void> updatePassword(@Valid @PathVariable Long id, @RequestBody UsuarioSenhaDto dto) {
         //Cfria-se um endPoint que permite a alteracao da senha
         Usuario user = usuarioService.editarSenha(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmaSenha());
@@ -89,6 +89,7 @@ public class UsuarioController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UsuarioResponseDto>> getAll() {
         List<Usuario> users = usuarioService.buscarTodos();
         return ResponseEntity.ok(UsuarioMapper.toListDto(users));
