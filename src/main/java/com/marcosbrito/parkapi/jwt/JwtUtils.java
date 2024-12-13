@@ -25,7 +25,7 @@ public class JwtUtils {
     //O token expira nesse periodo de tempo aqui:
     public static final long EXPIRE_DAYS = 0;
     public static final long EXPIRE_HOURS = 0;
-    public static final long EXPIRE_MINUTES = 2;
+    public static final long EXPIRE_MINUTES = 30;
 
 
     private JwtUtils() {
