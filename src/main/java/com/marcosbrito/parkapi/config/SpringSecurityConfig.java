@@ -1,5 +1,6 @@
 package com.marcosbrito.parkapi.config;
 
+import com.marcosbrito.parkapi.jwt.JwtAuthenticationEntryPoint;
 import com.marcosbrito.parkapi.jwt.JwtAuthorizationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,12 +37,15 @@ public class SpringSecurityConfig {
                 .httpBasic(basic -> basic.disable())//Desabilitando a autenticação do spring security
                 .authorizeHttpRequests(auth-> auth//incluindo um bloco de autoricao
                         .requestMatchers(HttpMethod.POST, "api/v1/usuarios").permitAll()//Autorizo a qualquer usuario acessar usuarios e usar o metodo post para criar um novo usuario
-                        .requestMatchers(HttpMethod.POST, "api/v1/auth").permitAll()//Torno publica o metodo de autentifaicao
+                        .requestMatchers(HttpMethod.POST, "api/v1/auth").permitAll()//Torno publica o metodo de autentifaicao4
                         .anyRequest().authenticated() //Com excecao do metodo acima, todos os outros precisaram ter acesso para realizar operacoes
                 ).sessionManagement(
                     session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)//Politica da sessão é do tipo stateless
                 ).addFilterBefore(
                         jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class
+                ).exceptionHandling(
+                        ex-> ex
+                                .authenticationEntryPoint(new JwtAuthenticationEntryPoint()) //Sempre que houver algum problema referente a autentificacao do usuario, o spring entrara na classe JwtAuthenticationEntryPoint e  lancara a exception 401
                 ).build();
     }
 
