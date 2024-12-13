@@ -19,14 +19,15 @@ import java.io.IOException;
 
 // Classe responsável por interceptar requisições HTTP para autenticação via JWT.
 // Extende OncePerRequestFilter para garantir que o filtro seja executado uma vez por requisição.
-@RequiredArgsConstructor
 @Slf4j
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
+    @Autowired
     // Serviço para carregar os detalhes do usuário baseado no nome de usuário.
-    private final JwtUserDetailsService detailsService;
+    private JwtUserDetailsService detailsService;
 
-    // Método principal que processa a autenticação JWT em cada requisição HTTP.
+    public JwtAuthorizationFilter(){}
+    // Metodo principal que processa a autenticação JWT em cada requisição HTTP.
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {

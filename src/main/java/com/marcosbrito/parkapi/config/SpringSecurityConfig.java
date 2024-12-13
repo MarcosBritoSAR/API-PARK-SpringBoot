@@ -1,5 +1,6 @@
 package com.marcosbrito.parkapi.config;
 
+import com.marcosbrito.parkapi.jwt.JwtAuthorizationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
@@ -33,10 +35,13 @@ public class SpringSecurityConfig {
                 .formLogin(form -> form.disable())//Desabilitando formulario de login
                 .httpBasic(basic -> basic.disable())//Desabilitando a autenticação do spring security
                 .authorizeHttpRequests(auth-> auth//incluindo um bloco de autoricao
-                        .requestMatchers(HttpMethod.POST, "api/v1/usuarios").permitAll() //Autorizo a qualquer usuario acessar usuarios e usar o metodo post para criar um novo usuario
+                        .requestMatchers(HttpMethod.POST, "api/v1/usuarios").permitAll()//Autorizo a qualquer usuario acessar usuarios e usar o metodo post para criar um novo usuario
+                        .requestMatchers(HttpMethod.POST, "api/v1/auth").permitAll()//Torno publica o metodo de autentifaicao
                         .anyRequest().authenticated() //Com excecao do metodo acima, todos os outros precisaram ter acesso para realizar operacoes
                 ).sessionManagement(
                     session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)//Politica da sessão é do tipo stateless
+                ).addFilterBefore(
+                        jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class
                 ).build();
     }
 
@@ -51,4 +56,8 @@ public class SpringSecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+    @Bean
+    public JwtAuthorizationFilter jwtAuthorizationFilter() {
+        return new JwtAuthorizationFilter();
+    }
 }

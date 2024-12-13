@@ -53,7 +53,7 @@ public class JwtUtils {
                 .setSubject(username) // Define o 'subject' do token como o nome do usuário
                 .setIssuedAt(issuedAt) // Define a data de emissão do token
                 .setExpiration(limit) // Define a data de expiração do token
-                .signWith(generate(), SignatureAlgorithm.ES256) // Assina o token com uma chave gerada e o algoritmo ES256
+                .signWith(generate(), SignatureAlgorithm.HS256) // Assina o token com uma chave gerada e o algoritmo ES256
                 .claim("role", role) // Adiciona uma claim personalizada com o papel do usuário
                 .compact(); // Finaliza a construção do token e retorna uma string compactada
 
