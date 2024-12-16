@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 
 public class JwtAuthentication {
 
-    public static Consumer<HttpHeaders> getHeaderAuthorizaion(WebTestClient webTestClient, String userName, String password) {
+    public static Consumer<HttpHeaders> getHeaderAuthorization(WebTestClient webTestClient, String userName, String password) {
         // Faz uma requisição POST para a URI "api/v1/auth" com os dados do usuário (username e senha)
         String token = webTestClient
                 .post() // Define o método HTTP como POST
