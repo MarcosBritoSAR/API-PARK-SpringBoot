@@ -75,18 +75,18 @@ public class UsuarioController {
     @Operation(summary = "Atualiza Senha", description = "Atualiza senha",
             security = @SecurityRequirement(name ="Authorization"),
             responses = {
-                    @ApiResponse(responseCode = "204", description = "Senha atualizada com sucesso",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UsuarioResponseDto.class))),
+                    @ApiResponse(responseCode = "204", description = "Senha atualizada com sucesso"),
+                    //Retirei o retorno 204 pois o 204 não retorna nada
                     @ApiResponse(responseCode = "400", description = "Senha não confere",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
-                    @ApiResponse(responseCode = "404", description = "Recurso não encontrado",
+
+                            //Retirei o erro 404 da documentação porque não será mais necessáio. Visto que estou usando o @PreAuthorize, caso o usuario tentar alterar a senha de outro, ele nem no metodo entrará. Logo nao poderá lançar excpetions
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
                     @ApiResponse(responseCode = "422", description = "Campo Invalido Ou Mal Formatado",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
 
             })
     @PatchMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','CLIENT') AND #id == authentication.principal.id ")
+    @PreAuthorize("hasAnyRole('ADMIN','CLIENT') AND (#id == authentication.principal.id)")
     public ResponseEntity<Void> updatePassword(@Valid @PathVariable Long id, @RequestBody UsuarioSenhaDto dto) {
         //Cfria-se um endPoint que permite a alteracao da senha
         Usuario user = usuarioService.editarSenha(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmaSenha());
