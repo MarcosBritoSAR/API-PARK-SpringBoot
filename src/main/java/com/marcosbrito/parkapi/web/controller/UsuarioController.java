@@ -78,7 +78,6 @@ public class UsuarioController {
                     @ApiResponse(responseCode = "204", description = "Senha atualizada com sucesso"),
                     //Retirei o retorno 204 pois o 204 não retorna nada
                     @ApiResponse(responseCode = "400", description = "Senha não confere",
-
                             //Retirei o erro 404 da documentação porque não será mais necessáio. Visto que estou usando o @PreAuthorize, caso o usuario tentar alterar a senha de outro, ele nem no metodo entrará. Logo nao poderá lançar excpetions
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
                     @ApiResponse(responseCode = "422", description = "Campo Invalido Ou Mal Formatado",
