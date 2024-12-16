@@ -41,8 +41,6 @@ public class UsuarioIT {
 
     @Autowired
     WebTestClient testClient;
-    @Autowired
-    private UsuarioService service;
 
 
     @Test //          motivo          o que está ssendo testado          o que retornara
