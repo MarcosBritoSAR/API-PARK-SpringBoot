@@ -74,6 +74,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
         // Define o token de autenticação no contexto de segurança do Spring Security.
+        //Permitir o acesso ao contexto de segurança durante a execução da aplicação.
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
     }
 }

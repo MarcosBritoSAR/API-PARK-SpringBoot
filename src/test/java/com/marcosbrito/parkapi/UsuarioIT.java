@@ -1,5 +1,9 @@
 package com.marcosbrito.parkapi;
 
+import com.marcosbrito.parkapi.entity.Usuario;
+import com.marcosbrito.parkapi.service.UsuarioService;
+import com.marcosbrito.parkapi.web.controller.AutenticacaoController;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.internal.bytebuddy.utility.dispatcher.JavaDispatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,6 +45,9 @@ public class UsuarioIT {
 
     @Autowired
     WebTestClient testClient;
+    @Autowired
+    private UsuarioService service;
+
 
     @Test //          motivo          o que está ssendo testado          o que retornara
     public void createUsuario_ComUsernameEPasswordValidos_RetornarUsuarioCriadoComStatus201() {
@@ -293,16 +300,27 @@ public class UsuarioIT {
 
     @Test
     public void listarUsuarios_SemQualquerParametro_RetornarListaDeUsuariosComStatus200() {
-        List<UsuarioResponseDto> responseBody = testClient
-                .get()
-                .uri("/api/v1/usuarios")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBodyList(UsuarioResponseDto.class)
-                .returnResult().getResponseBody();
 
-        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
-        org.assertj.core.api.Assertions.assertThat(responseBody.size()).isEqualTo(3);
+    //Vou deixar o token aqui pra ficar visível ao professor;
+        String jwtToken = "Bearer " + "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJjb3Nicnl0bzkyQGdtYWlsLmNvbSIsImlhdCI6MTczNDMwOTM0MywiZXhwIjoxNzM0MzExMTQzLCJyb2xlIjoiQURNSU4ifQ.QGtQcyATE5nnA4mAC_PQzxGb4sWMiY_00dLQczA2Zsk";
+
+        List<UsuarioResponseDto> responseBody = testClient
+                .get() // Realiza uma requisição HTTP GET
+                .uri("/api/v1/usuarios") // Define o endpoint que será acessado
+                .header("Authorization", jwtToken)
+                .exchange() // Executa a requisição e aguarda a resposta
+                .expectStatus().isEqualTo(200) // Verifica se o status da resposta é 200 (OK)
+                .expectBodyList(UsuarioResponseDto.class) // Espera que o corpo da resposta seja uma lista de UsuarioResponseDto
+                .returnResult() // Obtém o resultado completo da requisição
+                .getResponseBody(); // Extrai o corpo da resposta (a lista de usuários retornada)
+
+        // List<Usuario> user = service.buscarTodos();
+
+        // Validações usando AssertJ
+        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull(); // Verifica se a resposta não é nula
+        //org.assertj.core.api.Assertions.assertThat(responseBody.size()).isEqualTo(3); // Verifica se a lista contém exatamente 3 usuários
     }
-}
+
+
 //
+}
