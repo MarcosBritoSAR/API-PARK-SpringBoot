@@ -4,6 +4,7 @@ import com.marcosbrito.parkapi.entity.Cliente;
 import com.marcosbrito.parkapi.exception.CpfUniqueViolationException;
 import com.marcosbrito.parkapi.exception.EntityNotFoundException;
 import com.marcosbrito.parkapi.repository.ClienteRepository;
+import com.marcosbrito.parkapi.repository.projection.ClienteProjection;
 import com.marcosbrito.parkapi.web.dto.ClienteResponseDto;
 import com.marcosbrito.parkapi.web.dto.mapper.ClienteMapper;
 import jakarta.transaction.TransactionScoped;
@@ -40,8 +41,8 @@ public class ClienteService {
         );}
 
     @Transactional(readOnly = true)
-    public Page<Cliente> buscarTodos(Pageable pageable) {
-        return repository.findAll(pageable);
+    public Page<ClienteProjection> buscarTodos(Pageable pageable) {
+        return repository.findAllPageable(pageable);
     }
 
 }
