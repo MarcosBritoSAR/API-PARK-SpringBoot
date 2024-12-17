@@ -41,7 +41,7 @@ public class ClienteService {
 
 
     @Transactional(readOnly = true)
-    public Cliente buscarUsuarioPorId(Long id) {
-    return repository.findByUsuarioId(id);
+    public Cliente buscarUsuarioPorId(Long idDoUsuario) {
+    return repository.findByUsuarioId(idDoUsuario);
     }
 }
