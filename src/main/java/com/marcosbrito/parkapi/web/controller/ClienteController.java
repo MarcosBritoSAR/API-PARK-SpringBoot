@@ -3,11 +3,10 @@ package com.marcosbrito.parkapi.web.controller;
 
 import com.marcosbrito.parkapi.entity.Cliente;
 import com.marcosbrito.parkapi.jwt.JwtUserDetails;
-import com.marcosbrito.parkapi.jwt.JwtUserDetailsService;
 import com.marcosbrito.parkapi.service.ClienteService;
 import com.marcosbrito.parkapi.service.UsuarioService;
 import com.marcosbrito.parkapi.web.dto.ClienteCreateDto;
-import com.marcosbrito.parkapi.web.dto.ClienteResponseDTO;
+import com.marcosbrito.parkapi.web.dto.ClienteResponseDto;
 import com.marcosbrito.parkapi.web.dto.mapper.ClienteMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +28,7 @@ public class ClienteController {
 
     @PostMapping
     @PreAuthorize("hasRole('CLIENTE')")
-    public ResponseEntity<ClienteResponseDTO> create(@RequestBody @Valid ClienteCreateDto dto, @AuthenticationPrincipal JwtUserDetails userDetails) {
+    public ResponseEntity<ClienteResponseDto> create(@RequestBody @Valid ClienteCreateDto dto, @AuthenticationPrincipal JwtUserDetails userDetails) {
         Cliente cliente = ClienteMapper.toCliente(dto);
 
         //Como temos um relacionamento 1 para um com o ususario, precisamos vincular o cliente com o usuairo.
