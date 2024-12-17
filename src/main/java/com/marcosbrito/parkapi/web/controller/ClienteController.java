@@ -27,6 +27,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import static io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY;
@@ -121,6 +122,15 @@ public class ClienteController {
                                               @PageableDefault(size = 5, sort = {"nome"}) Pageable pageable) {
         Page<ClienteProjection> clientes = clienteService.buscarTodos(pageable);
         return ResponseEntity.ok(PageableMapper.toDto(clientes));
+    }
+
+    //TODO: PESQUISAR COMO ISSO ACONTECE. NÃO FEZ SENTIDO ALGUM PRA MIM
+    @GetMapping("/detalhes")
+    @PreAuthorize("hasRole('CLIENTE')")
+    public ResponseEntity<ClienteResponseDto> getDetalhes(@AuthenticationPrincipal JwtUserDetails userDetails) {
+        Cliente cliente = clienteService.buscarUsuarioPorId(userDetails.getId());
+        return ResponseEntity.ok(ClienteMapper.toDto(cliente) );
+
     }
 
 

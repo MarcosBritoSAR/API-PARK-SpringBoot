@@ -45,4 +45,9 @@ public class ClienteService {
         return repository.findAllPageable(pageable);
     }
 
+
+    @Transactional(readOnly = true)
+    public Cliente buscarUsuarioPorId(Long id) {
+    return repository.findByUsuarioId(id);
+    }
 }
