@@ -2,6 +2,7 @@ package com.marcosbrito.parkapi.web.controller;
 
 
 import com.marcosbrito.parkapi.entity.Cliente;
+import com.marcosbrito.parkapi.entity.Usuario;
 import com.marcosbrito.parkapi.jwt.JwtUserDetails;
 import com.marcosbrito.parkapi.repository.projection.ClienteProjection;
 import com.marcosbrito.parkapi.service.ClienteService;
@@ -129,6 +130,9 @@ public class ClienteController {
     @PreAuthorize("hasRole('CLIENTE')")
     public ResponseEntity<ClienteResponseDto> getDetalhes(@AuthenticationPrincipal JwtUserDetails userDetails) {
         Cliente cliente = clienteService.buscarUsuarioPorId(userDetails.getId());
+
+        //Usuario user = usuarioService.buscarPorId(userDetails.getId());
+
         return ResponseEntity.ok(ClienteMapper.toDto(cliente) );
 
     }

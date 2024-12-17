@@ -5,9 +5,6 @@ import com.marcosbrito.parkapi.exception.CpfUniqueViolationException;
 import com.marcosbrito.parkapi.exception.EntityNotFoundException;
 import com.marcosbrito.parkapi.repository.ClienteRepository;
 import com.marcosbrito.parkapi.repository.projection.ClienteProjection;
-import com.marcosbrito.parkapi.web.dto.ClienteResponseDto;
-import com.marcosbrito.parkapi.web.dto.mapper.ClienteMapper;
-import jakarta.transaction.TransactionScoped;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,9 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
