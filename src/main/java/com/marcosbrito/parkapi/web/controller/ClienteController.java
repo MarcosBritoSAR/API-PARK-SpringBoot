@@ -2,24 +2,33 @@ package com.marcosbrito.parkapi.web.controller;
 
 
 import com.marcosbrito.parkapi.entity.Cliente;
+import com.marcosbrito.parkapi.entity.Usuario;
 import com.marcosbrito.parkapi.jwt.JwtUserDetails;
 import com.marcosbrito.parkapi.service.ClienteService;
 import com.marcosbrito.parkapi.service.UsuarioService;
 import com.marcosbrito.parkapi.web.dto.ClienteCreateDto;
 import com.marcosbrito.parkapi.web.dto.ClienteResponseDto;
+import com.marcosbrito.parkapi.web.dto.RespostaPersonalizada;
+import com.marcosbrito.parkapi.web.dto.UsuarioCreateDto;
 import com.marcosbrito.parkapi.web.dto.mapper.ClienteMapper;
+import com.marcosbrito.parkapi.web.dto.mapper.UsuarioMapper;
 import com.marcosbrito.parkapi.web.exception.ErrorMessage;
+import org.springframework.data.domain.Pageable;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.data.domain.Page;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -64,4 +73,13 @@ public class ClienteController {
         Cliente cliente = clienteService.buscarPorId(id);
         return ResponseEntity.ok().body(ClienteMapper.toDto(cliente));
     }
+
+    @GetMapping()
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Page<Cliente>> getAll(Pageable pageable) {
+        Page<Cliente> cliente = clienteService.buscarTodos(pageable);
+        return ResponseEntity.ok().body(cliente);
+    }
+
+
 }
