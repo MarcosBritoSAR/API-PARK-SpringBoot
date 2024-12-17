@@ -35,6 +35,7 @@ public class AutenticacaoIT {
 
     }
 
+    //quando o usuario nao existe ou a senha é invalida
     @Test
     public void autenticar_ComCredenciaisInvalidas_RetornarErrorMensageStatus400(){
         ErrorMessage response = testClient.post()
@@ -61,6 +62,69 @@ public class AutenticacaoIT {
 
         org.assertj.core.api.Assertions.assertThat(response).isNotNull();
         org.assertj.core.api.Assertions.assertThat(response.getStatus()).isEqualTo(400);
+
+
+    }
+
+    //Acontecerá quando o nome ou a senha nao passa na vaidacao dos campos
+
+
+    @Test
+    public void autenticar_ComUserNameInvalidas_RetornarErrorMensageStatus422(){
+        ErrorMessage response = testClient.post()
+                .uri("/api/v1/auth")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new UsuarioLoginDto("", "123456"))
+                .exchange()
+                .expectStatus().isEqualTo(422) //Todo: Estudar o por que neste metodo eu nuso o isEqualTo e no metodo acima que também captura um erro, Ele retornar o isBadRequest
+                .expectBody(ErrorMessage.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(response).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(response.getStatus()).isEqualTo(422);
+
+
+        response = testClient.post()
+                .uri("/api/v1/auth")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new UsuarioLoginDto("anaemail.com", "123456"))
+                .exchange()
+                .expectStatus().isEqualTo(422)
+                .expectBody(ErrorMessage.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(response).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(response.getStatus()).isEqualTo(422);
+
+
+    }
+
+    @Test
+    public void autenticar_ComPassWordInvalidas_RetornarErrorMensageStatus422(){
+        ErrorMessage response = testClient.post()
+                .uri("/api/v1/auth")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new UsuarioLoginDto("ana@email.com", "123"))
+                .exchange()
+                .expectStatus().isEqualTo(422) //Todo: Estudar o por que neste metodo eu nuso o isEqualTo e no metodo acima que também captura um erro, Ele retornar o isBadRequest
+                .expectBody(ErrorMessage.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(response).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(response.getStatus()).isEqualTo(422);
+
+
+        response = testClient.post()
+                .uri("/api/v1/auth")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new UsuarioLoginDto("ana@email.com", "123456789"))
+                .exchange()
+                .expectStatus().isEqualTo(422)
+                .expectBody(ErrorMessage.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(response).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(response.getStatus()).isEqualTo(422);
 
 
     }
