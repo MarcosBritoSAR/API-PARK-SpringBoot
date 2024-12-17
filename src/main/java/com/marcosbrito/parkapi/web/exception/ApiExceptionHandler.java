@@ -1,5 +1,6 @@
 package com.marcosbrito.parkapi.web.exception;
 
+import com.marcosbrito.parkapi.exception.CpfUniqueViolationException;
 import com.marcosbrito.parkapi.exception.PasswordInvalidException;
 import com.marcosbrito.parkapi.exception.UsernameUniqueViolationException;
 import jakarta.persistence.EntityNotFoundException;
@@ -47,7 +48,7 @@ public class ApiExceptionHandler {
                 .body(new ErrorMessage(request, HttpStatus.NOT_FOUND, ex.getMessage()));
     }
 
-    @ExceptionHandler(UsernameUniqueViolationException.class) //Escutando e tratando
+    @ExceptionHandler({UsernameUniqueViolationException.class, CpfUniqueViolationException.class}) //Escutando e tratando
     public ResponseEntity<ErrorMessage> uniqueViolationException(RuntimeException ex, HttpServletRequest request) {
         log.error("Api Error - ", ex);
         return ResponseEntity
