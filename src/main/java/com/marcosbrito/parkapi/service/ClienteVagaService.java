@@ -42,4 +42,9 @@ public class ClienteVagaService {
         return clienteVagaRepository.findAllByClienteCpf(cpf,pageable);
 
     }
+
+    public Page<ClienteVagaProjection> buscarTodosPorUsuarioId(Long id, Pageable pageable) {
+
+        return clienteVagaRepository.findAllByClienteUsuarioId(id,pageable);
+    }
 }

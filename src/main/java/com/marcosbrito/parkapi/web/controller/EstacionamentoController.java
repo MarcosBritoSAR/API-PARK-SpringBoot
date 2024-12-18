@@ -1,6 +1,7 @@
 package com.marcosbrito.parkapi.web.controller;
 
 import com.marcosbrito.parkapi.entity.ClienteVaga;
+import com.marcosbrito.parkapi.jwt.JwtUserDetails;
 import com.marcosbrito.parkapi.repository.projection.ClienteVagaProjection;
 import com.marcosbrito.parkapi.service.ClienteVagaService;
 import com.marcosbrito.parkapi.service.EstacionamentoService;
@@ -25,6 +26,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -100,9 +102,18 @@ public class EstacionamentoController {
 
         //Criando uma Interface De Projeção
         Page<ClienteVagaProjection> projection = clienteVagaService.buscarTodosPorClienteCpf(cpf,pageable);
-
         PageableDto dto = PageableMapper.toDto(projection);
+        return ResponseEntity.ok(dto);
 
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('CLIENTE')")
+    public ResponseEntity<PageableDto> getAllEstacionamentosDoCliente(@AuthenticationPrincipal JwtUserDetails userDetails, @PathVariable String cpf, @PageableDefault(size = 5, sort = "dataEntrada", direction = Sort.Direction.ASC) Pageable pageable){
+
+        //Criando uma Interface De Projeção
+        Page<ClienteVagaProjection> projection = clienteVagaService.buscarTodosPorUsuarioId(userDetails.getId(),pageable);
+        PageableDto dto = PageableMapper.toDto(projection);
         return ResponseEntity.ok(dto);
 
     }
