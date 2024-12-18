@@ -1,6 +1,7 @@
 package com.marcosbrito.parkapi.web.controller;
 
 import com.marcosbrito.parkapi.entity.ClienteVaga;
+import com.marcosbrito.parkapi.service.ClienteVagaService;
 import com.marcosbrito.parkapi.service.EstacionamentoService;
 import com.marcosbrito.parkapi.web.dto.EstacionamentoCreateDto;
 import com.marcosbrito.parkapi.web.dto.EstacionamentoResponseDto;
@@ -28,6 +29,7 @@ import java.net.URI;
 public class EstacionamentoController {
 
     public final EstacionamentoService estacionamentoService;
+    public final ClienteVagaService clienteVagaService;
 
     @Operation(summary = "Operação de check-in", description = "Recurso para dar entrada de um veículo no estacionamento. " +
             "Requisição exige uso de um bearer token. Acesso restrito a Role='ADMIN'",
@@ -65,5 +67,14 @@ public class EstacionamentoController {
 
         //Desta forma, o metodo retorna tanto o cabeçalho quanto o corpo
         return ResponseEntity.created(location).body(estacionamentoResponseDto);
+    }
+
+
+    @GetMapping("Check-in/{recibo}")
+    @PreAuthorize("hasAnyRole('ADMIN','CLIENTE')")
+    public ResponseEntity<EstacionamentoResponseDto> getByRecibo(@PathVariable("recibo") String recibo){
+       ClienteVaga clienteVaga = clienteVagaService.buscarPorRecibo(recibo);
+        EstacionamentoResponseDto dto = ClienteVagaMapper.toDto(clienteVaga);
+        return ResponseEntity.ok(dto);
     }
 }
