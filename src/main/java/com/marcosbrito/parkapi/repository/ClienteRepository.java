@@ -31,7 +31,7 @@ Resultado de testes: {
 }
 */
 
-    // A busca ele deve ser algo assim:("SELECT id FROM cliente WHERE id_usuario = 11;")
+    // A busca dele deve ser algo assim:("SELECT id FROM cliente WHERE id_usuario = {id};")
     Cliente findByUsuarioId(Long id);
 }
 
