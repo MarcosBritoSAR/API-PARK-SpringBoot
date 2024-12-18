@@ -17,7 +17,6 @@ public class EstacionamentoService {
 
     private final ClienteVagaService clienteVagaService;
     private final ClienteService clienteService;
-    private final VagaService clienteVaga;
     private final VagaService vagaService;
 
     @Transactional
@@ -31,7 +30,7 @@ public class EstacionamentoService {
 
         clienteVaga.setCliente(cliente);
 
-        Vaga vaga = vagaService.buscarVagaLivre();
+        Vaga vaga = vagaService.buscarPorVagaLivre();
 
         //Ocupa a vaga
         vaga.setStatus(Vaga.StatusVaga.OCUPADA);
@@ -58,13 +57,11 @@ public class EstacionamentoService {
         BigDecimal valor = EstacionamentoUtils.calcularCusto(clienteVaga.getDataEntrada(), dataSaida);
         clienteVaga.setValor(valor);
 
-        //Buscando service
-
         long totalDeVezes = clienteVagaService.getTotalDeVezesEstacionamentoCompleto(clienteVaga.getCliente().getCpf());
 
-        BigDecimal desconto= EstacionamentoUtils.calcularDesconto(valor,totalDeVezes);
-
+        BigDecimal desconto = EstacionamentoUtils.calcularDesconto(valor, totalDeVezes);
         clienteVaga.setDesconto(desconto);
+
         clienteVaga.setDataSaida(dataSaida);
         clienteVaga.getVaga().setStatus(Vaga.StatusVaga.LIVRE);
 

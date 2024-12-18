@@ -146,7 +146,7 @@ public class EstacionamentoIT {
 
         testClient.get()
                 .uri("/api/v1/estacionamentos/check-in/{recibo}", "20230313-101300")
-                .headers(JwtAuthentication.getHeaderAuthorization(testClient, "bob@email.com.br", "123456"))
+                .headers(JwtAuthentication.getHeaderAuthorization(testClient, "nelson@email.com.br", "123456"))
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
