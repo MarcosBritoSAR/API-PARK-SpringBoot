@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
 
@@ -33,5 +35,7 @@ Resultado de testes: {
 
     // A busca dele deve ser algo assim:("SELECT id FROM cliente WHERE id_usuario = {id};")
     Cliente findByUsuarioId(Long id);
+
+    Optional<Cliente> findByCpf(String cpf);
 }
 

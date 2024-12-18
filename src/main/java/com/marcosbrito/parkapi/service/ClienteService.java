@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ClienteService {
 
     private final ClienteRepository repository;
+    private final ClienteRepository clienteRepository;
 
     @Transactional
     public Cliente save(Cliente cliente) {
@@ -43,5 +44,11 @@ public class ClienteService {
     @Transactional(readOnly = true)
     public Cliente buscarUsuarioPorId(Long idDoUsuario) {
     return repository.findByUsuarioId(idDoUsuario);
+    }
+@Transactional(readOnly = true)
+    public Cliente buscarPorCpf(String cpf) {
+        return clienteRepository.findByCpf(cpf).orElseThrow(
+                () -> new EntityNotFoundException(String.format("Cliente com o cpf = '%s' nao encontrado", cpf))
+        );
     }
 }
