@@ -16,39 +16,40 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class ClienteService {
-
-    private final ClienteRepository repository;
     private final ClienteRepository clienteRepository;
 
     @Transactional
-    public Cliente save(Cliente cliente) {
+    public Cliente salvar(Cliente cliente) {
         try {
-            return repository.save(cliente);
-        } catch (DataIntegrityViolationException e) {
-            throw new CpfUniqueViolationException(String.format("CPF '%s' nao pode ser cadastrad no sistema. Ja existe um cpf cadastrado", cliente.getCpf())) ;
+            return clienteRepository.save(cliente);
+        } catch (DataIntegrityViolationException ex) {
+            throw new CpfUniqueViolationException(
+                    String.format("CPF '%s' não pode ser cadastrado, já existe no sistema", cliente.getCpf())
+            );
         }
     }
 
-    @Transactional(readOnly = true) //Indica que é apenas para leitura
-    public Cliente buscarPorId(@Valid Long id) {
-        return repository.findById(id).orElseThrow(
-                () ->  new EntityNotFoundException(String.format("Client id ='%s' não encontrado", id))
-        );}
+    @Transactional(readOnly = true)
+    public Cliente buscarPorId(Long id) {
+        return clienteRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(String.format("Cliente id=%s não encontrado no sistema", id))
+        );
+    }
 
     @Transactional(readOnly = true)
     public Page<ClienteProjection> buscarTodos(Pageable pageable) {
-        return repository.findAllPageable(pageable);
+        return clienteRepository.findAllPageable(pageable);
     }
-
 
     @Transactional(readOnly = true)
-    public Cliente buscarUsuarioPorId(Long idDoUsuario) {
-    return repository.findByUsuarioId(idDoUsuario);
+    public Cliente buscarPorUsuarioId(Long id) {
+        return clienteRepository.findByUsuarioId(id);
     }
-@Transactional(readOnly = true)
+
+    @Transactional(readOnly = true)
     public Cliente buscarPorCpf(String cpf) {
         return clienteRepository.findByCpf(cpf).orElseThrow(
-                () -> new EntityNotFoundException(String.format("Cliente com o cpf = '%s' nao encontrado", cpf))
+                () -> new EntityNotFoundException(String.format("Cliente com CPF '%s' não encontrado", cpf))
         );
     }
 }

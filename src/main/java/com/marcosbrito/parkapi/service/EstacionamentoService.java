@@ -20,36 +20,23 @@ public class EstacionamentoService {
     private final VagaService vagaService;
 
     @Transactional
-    public ClienteVaga checkin(ClienteVaga clienteVaga) {
-            //Preciso recuperar o cpf e fazer a busca do cliente. Preciso do cliente no metodo por que ele faz parte do mapeamento do ClienteVaga
-
-        Cliente cliente;
-        cliente = clienteService.buscarPorCpf(clienteVaga.getCliente().getCpf());
-
-        //Quando eu logo, o sistema me retorna apenas o Cliente Com o CPF dele. Ao buscar no banco de dados, eu tenho o Cliente Completo
-
+    public ClienteVaga checkIn(ClienteVaga clienteVaga) {
+        Cliente cliente = clienteService.buscarPorCpf(clienteVaga.getCliente().getCpf());
         clienteVaga.setCliente(cliente);
 
         Vaga vaga = vagaService.buscarPorVagaLivre();
-
-        //Ocupa a vaga
         vaga.setStatus(Vaga.StatusVaga.OCUPADA);
-
-        /*
-        Quando o cliente vaga for salvo no banco de dado, acontecerá o relacionamento
-        da vaga ocupada com o cliente
-         */
         clienteVaga.setVaga(vaga);
+
         clienteVaga.setDataEntrada(LocalDateTime.now());
 
         clienteVaga.setRecibo(EstacionamentoUtils.gerarRecibo());
 
-        return clienteVagaService.save(clienteVaga);
-
+        return clienteVagaService.salvar(clienteVaga);
     }
 
     @Transactional
-    public ClienteVaga checkout(String recibo) {
+    public ClienteVaga checkOut(String recibo) {
         ClienteVaga clienteVaga = clienteVagaService.buscarPorRecibo(recibo);
 
         LocalDateTime dataSaida = LocalDateTime.now();
@@ -65,6 +52,6 @@ public class EstacionamentoService {
         clienteVaga.setDataSaida(dataSaida);
         clienteVaga.getVaga().setStatus(Vaga.StatusVaga.LIVRE);
 
-        return clienteVagaService.save(clienteVaga);
+        return clienteVagaService.salvar(clienteVaga);
     }
 }

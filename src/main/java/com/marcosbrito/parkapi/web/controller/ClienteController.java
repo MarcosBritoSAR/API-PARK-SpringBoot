@@ -66,7 +66,7 @@ public class ClienteController {
         //Sempre ao fazer um login, o Spring Security guarda um objeto UserDetails que guarda os objetos do usuario e por lá pegamento o id dele usando o getId
 
         cliente.setUsuario(usuarioService.buscarPorId(userDetails.getId()));
-        clienteService.save(cliente);
+        clienteService.salvar(cliente);
 
         return ResponseEntity.status(201).body(ClienteMapper.toDto(cliente));
     }
@@ -129,7 +129,7 @@ public class ClienteController {
     @GetMapping("/detalhes")
     @PreAuthorize("hasRole('CLIENTE')")
     public ResponseEntity<ClienteResponseDto> getDetalhes(@AuthenticationPrincipal JwtUserDetails userDetails) {
-        Cliente cliente = clienteService.buscarUsuarioPorId(userDetails.getId());
+        Cliente cliente = clienteService.buscarPorUsuarioId(userDetails.getId());
         return ResponseEntity.ok(ClienteMapper.toDto(cliente) );
 
     }

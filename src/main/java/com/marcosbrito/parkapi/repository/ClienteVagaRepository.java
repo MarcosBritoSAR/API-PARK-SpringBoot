@@ -1,6 +1,7 @@
 package com.marcosbrito.parkapi.repository;
 
 import com.marcosbrito.parkapi.entity.ClienteVaga;
+import com.marcosbrito.parkapi.repository.projection.ClienteProjection;
 import com.marcosbrito.parkapi.repository.projection.ClienteVagaProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
