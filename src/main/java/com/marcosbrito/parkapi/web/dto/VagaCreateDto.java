@@ -14,6 +14,6 @@ public class VagaCreateDto {
     @Size(min = 4, max = 4, message = "Size.vagaCreateDto.codigo")
     private String codigo;
     @NotBlank(message = "NotBlank.vagaCreateDto.status")
-    @Pattern(regexp = "LIVRE|OCUPADA",message = "Status.vagaCreateDto.status")
+    @Pattern(regexp = "LIVRE|OCUPADA",message = "Pattern.vagaCreateDto.status")
     private String status;
 }
