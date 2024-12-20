@@ -1,5 +1,6 @@
 package com.marcosbrito.parkapi.web.exception;
 
+import com.marcosbrito.parkapi.exception.CodigoUniqueViolationException;
 import com.marcosbrito.parkapi.exception.CpfUniqueViolationException;
 import com.marcosbrito.parkapi.exception.PasswordInvalidException;
 import com.marcosbrito.parkapi.exception.UsernameUniqueViolationException;
@@ -24,6 +25,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ApiExceptionHandler {
 
     private final MessageSource messageSource;
+
+    @ExceptionHandler(CodigoUniqueViolationException.class) //Escutando e tratando
+    public ResponseEntity<ErrorMessage> uniqueViolationException(CodigoUniqueViolationException ex, HttpServletRequest request) {
+        log.error("Api Error - ", ex);
+        String message = messageSource.getMessage("exception.CodigoUniqueViolationException.message", new Object[]{ex.getRecurso(),ex.getCodigo()},request.getLocale());
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorMessage(request, HttpStatus.CONFLICT, message));
+    }
 
     @ExceptionHandler(PasswordInvalidException.class)
     public ResponseEntity<ErrorMessage> passwordInvalidException(RuntimeException ex, HttpServletRequest request) {

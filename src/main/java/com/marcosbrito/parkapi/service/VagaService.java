@@ -5,6 +5,7 @@ import com.marcosbrito.parkapi.exception.CodigoUniqueViolationException;
 import com.marcosbrito.parkapi.exception.EntityNotFoundException;
 import com.marcosbrito.parkapi.repository.VagaRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,9 +22,7 @@ public class VagaService {
         try {
             return vagaRepository.save(vaga);
         } catch (DataIntegrityViolationException ex) {
-            throw new CodigoUniqueViolationException(
-                    String.format("Vaga com código '%s' já cadastrada", vaga.getCodigo())
-            );
+            throw new CodigoUniqueViolationException("Vaga", vaga.getCodigo());
         }
     }
 
