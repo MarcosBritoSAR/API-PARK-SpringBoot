@@ -1,10 +1,6 @@
 package com.marcosbrito.parkapi.web.exception;
 
-import com.marcosbrito.parkapi.exception.CodigoUniqueViolationException;
-import com.marcosbrito.parkapi.exception.CpfUniqueViolationException;
-import com.marcosbrito.parkapi.exception.PasswordInvalidException;
-import com.marcosbrito.parkapi.exception.UsernameUniqueViolationException;
-import jakarta.persistence.EntityNotFoundException;
+import com.marcosbrito.parkapi.exception.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,12 +51,13 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(EntityNotFoundException.class) //Escutando exception caso nao enccontre id do usuario
-    public ResponseEntity<ErrorMessage> entityNotFoundException(RuntimeException ex, HttpServletRequest request) {
+    public ResponseEntity<ErrorMessage> entityNotFoundException(EntityNotFoundException ex, HttpServletRequest request) {
         log.error("Api Error - ", ex);
+        String message = messageSource.getMessage("exception.EntityNotFoundException.message", new Object[]{ex.getRecurso(),ex.getCodigo()},request.getLocale());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new ErrorMessage(request, HttpStatus.NOT_FOUND, ex.getMessage()));
+                .body(new ErrorMessage(request, HttpStatus.NOT_FOUND, message));
     }
 
     @ExceptionHandler({UsernameUniqueViolationException.class, CpfUniqueViolationException.class}) //Escutando e tratando
